@@ -13,7 +13,7 @@ test: upd-vendor
 	GIN_MODE=release go test -timeout 1m -cover $$(go list ./... | grep -v test)
 
 lint: 
-	golangci-lint run --allow-parallel-runners -c ~/.golangci-lint.yml --fix ./...
+	golangci-lint run --allow-parallel-runners -c ./.golangci-lint.yml --fix ./...
 
 godoc:
 	command -v godoc >/dev/null 2>&1 || go get golang.org/x/tools/cmd/godoc

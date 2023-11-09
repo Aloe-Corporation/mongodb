@@ -1,9 +1,3 @@
-# github.com/Aloe-Corporation/docker v0.0.1
-## explicit; go 1.20
-github.com/Aloe-Corporation/docker
-# github.com/davecgh/go-spew v1.1.1
-## explicit
-github.com/davecgh/go-spew/spew
 # github.com/golang/snappy v0.0.1
 ## explicit
 github.com/golang/snappy
@@ -18,12 +12,6 @@ github.com/klauspost/compress/zstd/internal/xxhash
 # github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe
 ## explicit
 github.com/montanaflynn/stats
-# github.com/pmezard/go-difflib v1.0.0
-## explicit
-github.com/pmezard/go-difflib/difflib
-# github.com/stretchr/testify v1.8.4
-## explicit; go 1.20
-github.com/stretchr/testify/assert
 # github.com/xdg-go/pbkdf2 v1.0.0
 ## explicit; go 1.9
 github.com/xdg-go/pbkdf2
@@ -97,6 +85,3 @@ golang.org/x/sync/singleflight
 ## explicit; go 1.17
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# gopkg.in/yaml.v3 v3.0.1
-## explicit
-gopkg.in/yaml.v3
