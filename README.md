@@ -62,7 +62,11 @@ if err != nil {
 ```
 
 ## Test
+To run test use:
 - `make test`
+
+All environment variables present in the `test/.env.example` must be set in your test environment.
+
 
 ## Contributing
 
