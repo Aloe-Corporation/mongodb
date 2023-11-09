@@ -35,8 +35,8 @@ jobs:
         
     - name: Test
       env:
-      - MONGO_DB_HOST: ${{ secrets.MONGO_DB_HOST }}
-      - MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
-      - MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_PASSWORD }}
-      - MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_USERNAME }}
+        MONGO_DB_HOST: ${{ secrets.MONGO_DB_HOST }}
+        MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+        MONGO_DB_PASSWORD: ${{ secrets.MONGO_DB_PASSWORD }}
+        MONGO_DB_USERNAME: ${{ secrets.MONGO_DB_USERNAME }}
       run: go test -v ./...
