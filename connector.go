@@ -20,7 +20,7 @@ type Conf struct {
 }
 
 // Connector is the connector used to communicate with MongoDB database server.
-// It embed a native mongo.Client so it can be used as is and is supercharger with
+// It embeds a native mongo.Client so it can be used as is and is supercharger with
 // additionnal methods.
 type Connector struct {
 	*mongo.Client
