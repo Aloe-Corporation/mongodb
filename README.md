@@ -20,7 +20,7 @@ The mongodb module provides:
 
 ## Concepts 
 
-The module aims to ease the configuration and some operation to interact with a MongoDB server.
+The module aims to ease the configuration and some operations to interact with a MongoDB server.
 
 ## Usage
 
