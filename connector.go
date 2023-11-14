@@ -11,12 +11,13 @@ import (
 
 // Conf contains all information to connect to a MongoDB server.
 type Conf struct {
-	DB         string `yaml:"db"`          // Name of the database.
-	Host       string `yaml:"host"`        // URL to reach the mongoDB server.
-	Username   string `yaml:"username"`    // Credential to authenticate to the db.
-	Password   string `yaml:"password"`    // Credential to authenticate to the db.
-	AuthSource string `yaml:"auth_source"` // Database to check authentication
-	Timeout    int    `yaml:"timeout"`     // Connection timeout in seconds
+	DB         string `yaml:"db"`             // Name of the database.
+	Host       string `yaml:"host"`           // URL to reach the mongoDB server.
+	Port       int    `yaml:"port,omitempty"` // Optionnal port.
+	Username   string `yaml:"username"`       // Credential to authenticate to the db.
+	Password   string `yaml:"password"`       // Credential to authenticate to the db.
+	AuthSource string `yaml:"auth_source"`    // Database to check authentication
+	Timeout    int    `yaml:"timeout"`        // Connection timeout in seconds
 }
 
 // Connector is the connector used to communicate with MongoDB database server.
@@ -44,6 +45,10 @@ func (con *Connector) TryConnection() error {
 // FactoryConnector instanciates a new *Connector with the given params.
 func FactoryConnector(c Conf) (*Connector, error) {
 	connectionURI := fmt.Sprintf("mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.AuthSource)
+	if c.Port != 0 {
+		connectionURI = fmt.Sprintf("mongodb://%s:%s@%s/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.AuthSource)
+
+	}
 
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 
