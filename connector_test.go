@@ -134,6 +134,21 @@ func TestFactoryConnector(t *testing.T) {
 			wantErr: false,
 		},
 		{
+			name: "Success case with port",
+			args: args{
+				c: Conf{
+					DB:         defaultClient.DB,
+					Host:       defaultConfig.Host,
+					Port:       27017,
+					Username:   defaultConfig.Username,
+					Password:   defaultConfig.Password,
+					AuthSource: defaultConfig.AuthSource,
+					Timeout:    defaultConfig.Timeout,
+				},
+			},
+			wantErr: false,
+		},
+		{
 			name: "Fail case: wrong Host",
 			args: args{
 				c: Conf{
