@@ -13,7 +13,7 @@ import (
 type Conf struct {
 	DB         string `yaml:"db"`             // Name of the database.
 	Host       string `yaml:"host"`           // URL to reach the mongoDB server.
-	Port       int    `yaml:"port,omitempty"` // Optionnal port.
+	Port       int    `yaml:"port,omitempty"` // Optionnal port, if set to 0 it won't be processed.
 	Username   string `yaml:"username"`       // Credential to authenticate to the db.
 	Password   string `yaml:"password"`       // Credential to authenticate to the db.
 	AuthSource string `yaml:"auth_source"`    // Database to check authentication
