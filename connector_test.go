@@ -15,6 +15,7 @@ var (
 		Username:   os.Getenv("MONGO_DB_USERNAME"),
 		Password:   os.Getenv("MONGO_DB_PASSWORD"),
 		AuthSource: os.Getenv("MONGO_DB_AUTH_SOURCE"),
+		Port:       0,
 		Timeout:    10,
 	}
 	defaultClient *Connector
@@ -22,6 +23,7 @@ var (
 
 func TestMain(m *testing.M) {
 	var err error
+	// instanciate a client, please verify that the env is set before running this tests.
 	defaultClient, err = FactoryConnector(defaultConfig)
 	if err != nil {
 		panic(err)
@@ -40,8 +42,9 @@ func TestMain(m *testing.M) {
 
 func TestConnector_Collection(t *testing.T) {
 	type fields struct {
-		Client *mongo.Client
-		DB     string
+		Client      *mongo.Client
+		DB          string
+		Collections map[string]*mongo.Collection
 	}
 	type args struct {
 		collectionName string
@@ -52,10 +55,22 @@ func TestConnector_Collection(t *testing.T) {
 		args   args
 	}{
 		{
-			name: "Success case",
+			name: "Success case, with not nil Collection",
 			fields: fields{
-				Client: defaultClient.Client,
-				DB:     "testing",
+				Client:      defaultClient.Client,
+				DB:          "testing",
+				Collections: make(map[string]*mongo.Collection),
+			},
+			args: args{
+				collectionName: "test",
+			},
+		},
+		{
+			name: "Success case, with nil Collection",
+			fields: fields{
+				Client:      defaultClient.Client,
+				DB:          "testing",
+				Collections: nil,
 			},
 			args: args{
 				collectionName: "test",
