@@ -21,16 +21,27 @@ type Conf struct {
 }
 
 // Connector is the connector used to communicate with MongoDB database server.
-// It embeds a native mongo.Client so it can be used as is and is supercharger with
+// It embeds a native mongo.Client so it can be used as is and is supercharged with
 // additionnal methods.
 type Connector struct {
 	*mongo.Client
-	DB string
+	DB          string
+	Collections map[string]*mongo.Collection
 }
 
 // Collection returns the  *mongo.Collection identified its name.
+// If the specified collections doesn't exists on con.Collections map
+// then add it.
 func (con *Connector) Collection(collectionName string) *mongo.Collection {
-	return con.Database(con.DB).Collection(collectionName)
+	if con.Collections == nil {
+		con.Collections = make(map[string]*mongo.Collection)
+	}
+
+	if _, ok := con.Collections[collectionName]; !ok {
+		con.Collections[collectionName] = con.Database(con.DB).Collection(collectionName)
+	}
+
+	return con.Collections[collectionName]
 }
 
 // TryConnection tests ping, it end if the ping is a success or timeout.
@@ -53,6 +64,10 @@ func FactoryConnector(c Conf) (*Connector, error) {
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 
 	clientOptions := options.Client().ApplyURI(connectionURI).SetServerAPIOptions(serverAPI)
+	err := clientOptions.Validate()
+	if err != nil {
+		return nil, fmt.Errorf("invalid client options: %w", err)
+	}
 
 	timeout := time.Second * time.Duration(c.Timeout)
 
@@ -64,8 +79,9 @@ func FactoryConnector(c Conf) (*Connector, error) {
 	}
 
 	con := &Connector{
-		DB:     c.DB,
-		Client: client,
+		DB:          c.DB,
+		Client:      client,
+		Collections: make(map[string]*mongo.Collection),
 	}
 	return con, nil
 }
