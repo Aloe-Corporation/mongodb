@@ -11,13 +11,13 @@ import (
 
 // Conf contains all information to connect to a MongoDB server.
 type Conf struct {
-	DB         string `yaml:"db"`             // Name of the database.
-	Host       string `yaml:"host"`           // URL to reach the mongoDB server.
-	Port       int    `yaml:"port,omitempty"` // Optionnal port, if set to 0 it won't be processed.
-	Username   string `yaml:"username"`       // Credential to authenticate to the db.
-	Password   string `yaml:"password"`       // Credential to authenticate to the db.
-	AuthSource string `yaml:"auth_source"`    // Database to check authentication
-	Timeout    int    `yaml:"timeout"`        // Connection timeout in seconds
+	DB         string `mapstructure:"db" yaml:"db"`                         // Name of the database.
+	Host       string `mapstructure:"host" yaml:"host"`                     // URL to reach the mongoDB server.
+	Port       int    `mapstructure:"port,omitempty" yaml:"port,omitempty"` // Optionnal port, if set to 0 it won't be processed.
+	Username   string `mapstructure:"username" yaml:"username"`             // Credential to authenticate to the db.
+	Password   string `mapstructure:"password" yaml:"password"`             // Credential to authenticate to the db.
+	AuthSource string `mapstructure:"auth_source" yaml:"auth_source"`       // Database to check authentication
+	Timeout    int    `mapstructure:"timeout" yaml:"timeout"`               // Connection timeout in seconds
 }
 
 // Connector is the connector used to communicate with MongoDB database server.
