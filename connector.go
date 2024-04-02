@@ -57,7 +57,7 @@ func (con *Connector) TryConnection() error {
 func FactoryConnector(c Conf) (*Connector, error) {
 	connectionURI := fmt.Sprintf("mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.AuthSource)
 	if c.Port != 0 {
-		connectionURI = fmt.Sprintf("mongodb://%s:%s@%s/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.AuthSource)
+		connectionURI = fmt.Sprintf("mongodb://%s:%s@%s:%d/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.Port, c.AuthSource)
 
 	}
 
