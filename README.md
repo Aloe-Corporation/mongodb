@@ -13,10 +13,10 @@ The mongodb connector supercharge the native `go.mongodb.org/mongo-driver/mongo`
 
 The mongodb module provides:
 
--   A structure to hold configuration
--   A factory to create the connector
--   Addionnal functions
--   Infinite compatibility because it embed a native `go.mongodb.org/mongo-driver/mongo` client
+- A structure to hold configuration
+- A factory to create the connector
+- Addionnal functions
+- Infinite compatibility because it embed a native `go.mongodb.org/mongo-driver/mongo` client
 
 ## Concepts
 
@@ -30,13 +30,14 @@ The `mongodb.Conf` use YAML and Mapstructure tags, it's easy to load MongoDB con
 
 ```go
 type Conf struct {
-	DB         string `mapstructure:"db" yaml:"db"`                         // Name of the database.
-	Host       string `mapstructure:"host" yaml:"host"`                     // URL to reach the mongoDB server.
-	Port       int    `mapstructure:"port,omitempty" yaml:"port,omitempty"` // Optionnal port, if set to 0 it won't be processed.
-	Username   string `mapstructure:"username" yaml:"username"`             // Credential to authenticate to the db.
-	Password   string `mapstructure:"password" yaml:"password"`             // Credential to authenticate to the db.
-	AuthSource string `mapstructure:"auth_source" yaml:"auth_source"`       // Database to check authentication
-	Timeout    int    `mapstructure:"timeout" yaml:"timeout"`               // Connection timeout in seconds
+ DB         string `mapstructure:"db" yaml:"db"`                         // Name of the database.
+ Host       string `mapstructure:"host" yaml:"host"`                     // URL to reach the mongoDB server.
+ Port       int    `mapstructure:"port,omitempty" yaml:"port,omitempty"` // Optionnal port, if set to 0 it won't be processed.
+ Username   string `mapstructure:"username" yaml:"username"`             // Credential to authenticate to the db.
+ Password   string `mapstructure:"password" yaml:"password"`             // Credential to authenticate to the db.
+ AuthSource string `mapstructure:"auth_source" yaml:"auth_source"`       // Database to check authentication
+ Timeout    int    `mapstructure:"timeout" yaml:"timeout"`               // Connection timeout in seconds
+ Options    map[string]string `mapstructure:"options" yaml:"options"`               // List of connection options
 }
 ```
 
@@ -46,22 +47,22 @@ To create a new MongoDB Connector use this function with as configuration the st
 
 ```go
 var config := mongodb.Conf{
-	DB:       "my_database",
-	Host:     "localhost:27006",
-	Username: "user",
-	Password: "pass",
-	AuthSource: "admin"
-	Timeout:  10,
+ DB:       "my_database",
+ Host:     "localhost:27006",
+ Username: "user",
+ Password: "pass",
+ AuthSource: "admin"
+ Timeout:  10,
 }
 
 md, err = mongodb.FactoryConnector(config)
 if err != nil {
-	return fmt.Errorf("fail to init MongoDB connector: %w", err)
+ return fmt.Errorf("fail to init MongoDB connector: %w", err)
 }
 
 err = md.TryConnection()
 if err != nil {
-	return fmt.Errorf("fail to ping MongoDB: %w", err)
+ return fmt.Errorf("fail to ping MongoDB: %w", err)
 }
 
 ```
@@ -70,7 +71,7 @@ if err != nil {
 
 To run test use:
 
--   `make test`
+- `make test`
 
 All environment variables present in the `test/.env.example` must be set in your test environment.
 
