@@ -1,16 +1,17 @@
-# github.com/golang/snappy v0.0.1
+# github.com/golang/snappy v0.0.4
 ## explicit
 github.com/golang/snappy
-# github.com/klauspost/compress v1.13.6
-## explicit; go 1.15
+# github.com/klauspost/compress v1.17.8
+## explicit; go 1.20
 github.com/klauspost/compress
 github.com/klauspost/compress/fse
 github.com/klauspost/compress/huff0
+github.com/klauspost/compress/internal/cpuinfo
 github.com/klauspost/compress/internal/snapref
 github.com/klauspost/compress/zstd
 github.com/klauspost/compress/zstd/internal/xxhash
-# github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe
-## explicit
+# github.com/montanaflynn/stats v0.7.1
+## explicit; go 1.13
 github.com/montanaflynn/stats
 # github.com/xdg-go/pbkdf2 v1.0.0
 ## explicit; go 1.9
@@ -21,11 +22,11 @@ github.com/xdg-go/scram
 # github.com/xdg-go/stringprep v1.0.4
 ## explicit; go 1.11
 github.com/xdg-go/stringprep
-# github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d
-## explicit
+# github.com/youmark/pkcs8 v0.0.0-20240424034433-3c2c7870ae76
+## explicit; go 1.22
 github.com/youmark/pkcs8
-# go.mongodb.org/mongo-driver v1.13.0
-## explicit; go 1.13
+# go.mongodb.org/mongo-driver v1.15.0
+## explicit; go 1.18
 go.mongodb.org/mongo-driver/bson
 go.mongodb.org/mongo-driver/bson/bsoncodec
 go.mongodb.org/mongo-driver/bson/bsonoptions
@@ -73,15 +74,16 @@ go.mongodb.org/mongo-driver/x/mongo/driver/operation
 go.mongodb.org/mongo-driver/x/mongo/driver/session
 go.mongodb.org/mongo-driver/x/mongo/driver/topology
 go.mongodb.org/mongo-driver/x/mongo/driver/wiremessage
-# golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
-## explicit; go 1.17
+# golang.org/x/crypto v0.24.0
+## explicit; go 1.18
 golang.org/x/crypto/ocsp
 golang.org/x/crypto/pbkdf2
-# golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
-## explicit
+golang.org/x/crypto/scrypt
+# golang.org/x/sync v0.7.0
+## explicit; go 1.18
 golang.org/x/sync/errgroup
 golang.org/x/sync/singleflight
-# golang.org/x/text v0.7.0
-## explicit; go 1.17
+# golang.org/x/text v0.16.0
+## explicit; go 1.18
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
