@@ -194,3 +194,40 @@ func TestFactoryConnector(t *testing.T) {
 		})
 	}
 }
+
+func Test_buildOptions(t *testing.T) {
+
+	tests := []struct {
+		name    string
+		options map[string]string
+		want    string
+	}{
+		{
+			name: "Multiple options provided",
+			options: map[string]string{
+				"opt1": "va1",
+				"opt2": "va2",
+			},
+			want: "&opt1=va1&opt2=va2",
+		},
+		{
+			name: "One option provided",
+			options: map[string]string{
+				"opt1": "va1",
+			},
+			want: "&opt1=va1",
+		},
+		{
+			name:    "Empty",
+			options: map[string]string{},
+			want:    "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := buildOptions(tt.options); got != tt.want {
+				t.Errorf("buildOptions() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
