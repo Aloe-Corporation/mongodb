@@ -3,6 +3,7 @@ package mongodb
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -11,13 +12,14 @@ import (
 
 // Conf contains all information to connect to a MongoDB server.
 type Conf struct {
-	DB         string `mapstructure:"db" yaml:"db"`                         // Name of the database.
-	Host       string `mapstructure:"host" yaml:"host"`                     // URL to reach the mongoDB server.
-	Port       int    `mapstructure:"port,omitempty" yaml:"port,omitempty"` // Optionnal port, if set to 0 it won't be processed.
-	Username   string `mapstructure:"username" yaml:"username"`             // Credential to authenticate to the db.
-	Password   string `mapstructure:"password" yaml:"password"`             // Credential to authenticate to the db.
-	AuthSource string `mapstructure:"auth_source" yaml:"auth_source"`       // Database to check authentication
-	Timeout    int    `mapstructure:"timeout" yaml:"timeout"`               // Connection timeout in seconds
+	DB         string            `mapstructure:"db" yaml:"db"`                         // Name of the database.
+	Host       string            `mapstructure:"host" yaml:"host"`                     // URL to reach the mongoDB server.
+	Port       int               `mapstructure:"port,omitempty" yaml:"port,omitempty"` // Optionnal port, if set to 0 it won't be processed.
+	Username   string            `mapstructure:"username" yaml:"username"`             // Credential to authenticate to the db.
+	Password   string            `mapstructure:"password" yaml:"password"`             // Credential to authenticate to the db.
+	AuthSource string            `mapstructure:"auth_source" yaml:"auth_source"`       // Database to check authentication
+	Timeout    int               `mapstructure:"timeout" yaml:"timeout"`               // Connection timeout in seconds
+	Options    map[string]string `mapstructure:"options" yaml:"options"`               // List of connection options
 }
 
 // Connector is the connector used to communicate with MongoDB database server.
@@ -55,7 +57,7 @@ func (con *Connector) TryConnection() error {
 
 // FactoryConnector instanciates a new *Connector with the given params.
 func FactoryConnector(c Conf) (*Connector, error) {
-	connectionURI := fmt.Sprintf("mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.AuthSource)
+	connectionURI := fmt.Sprintf("mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority%s", c.Username, c.Password, c.Host, c.AuthSource, buildOptions(c.Options))
 	if c.Port != 0 {
 		connectionURI = fmt.Sprintf("mongodb://%s:%s@%s:%d/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.Port, c.AuthSource)
 
@@ -84,4 +86,17 @@ func FactoryConnector(c Conf) (*Connector, error) {
 		Collections: make(map[string]*mongo.Collection),
 	}
 	return con, nil
+}
+
+func buildOptions(options map[string]string) string {
+	if len(options) == 0 {
+		return ""
+	}
+
+	mergedOptions := []string{}
+	for name, value := range options {
+		mergedOptions = append(mergedOptions, name+"="+value)
+	}
+
+	return "&" + strings.Join(mergedOptions, "&")
 }
