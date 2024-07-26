@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"testing"
 
@@ -22,11 +23,16 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	var err error
 	// instanciate a client, please verify that the env is set before running this tests.
-	defaultClient, err = FactoryConnector(defaultConfig)
+	connector, err := FactoryConnector(defaultConfig)
 	if err != nil {
 		panic(err)
+	}
+
+	var castable bool
+	defaultClient, castable = connector.(*Connector)
+	if !castable {
+		panic(fmt.Errorf("can't cast default client into concret type. Type : %t", connector))
 	}
 
 	defer func() {

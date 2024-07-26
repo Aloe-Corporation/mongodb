@@ -10,6 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+var _ IConnector = (*Connector)(nil)
+
 // Conf contains all information to connect to a MongoDB server.
 type Conf struct {
 	DB         string            `mapstructure:"db" yaml:"db"`                         // Name of the database.
@@ -20,6 +22,13 @@ type Conf struct {
 	AuthSource string            `mapstructure:"auth_source" yaml:"auth_source"`       // Database to check authentication
 	Timeout    int               `mapstructure:"timeout" yaml:"timeout"`               // Connection timeout in seconds
 	Options    map[string]string `mapstructure:"options" yaml:"options"`               // List of connection options
+}
+
+// IConnector is the interface for all connector
+type IConnector interface {
+	Collection(collectionName string) *mongo.Collection
+	TryConnection() error
+	GetClient() *mongo.Client
 }
 
 // Connector is the connector used to communicate with MongoDB database server.
@@ -55,8 +64,12 @@ func (con *Connector) TryConnection() error {
 	return nil
 }
 
+func (con *Connector) GetClient() *mongo.Client {
+	return con.Client
+}
+
 // FactoryConnector instanciates a new *Connector with the given params.
-func FactoryConnector(c Conf) (*Connector, error) {
+func FactoryConnector(c Conf) (IConnector, error) {
 	connectionURI := fmt.Sprintf("mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority%s", c.Username, c.Password, c.Host, c.AuthSource, buildOptions(c.Options))
 	if c.Port != 0 {
 		connectionURI = fmt.Sprintf("mongodb://%s:%s@%s:%d/%s?retryWrites=true&w=majority", c.Username, c.Password, c.Host, c.Port, c.AuthSource)
