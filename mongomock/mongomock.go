@@ -1,6 +1,8 @@
 package mongomock
 
 import (
+	"testing"
+
 	"github.com/Aloe-Corporation/mongodb"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/integration/mtest"
@@ -28,4 +30,8 @@ func New(t *mtest.T) *MockConnector {
 	return &MockConnector{
 		MockClient: t,
 	}
+}
+
+func NewBasicMTest(t *testing.T, dbName, collName string) *mtest.T {
+	return mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock).DatabaseName("test").CollectionName("reports"))
 }
