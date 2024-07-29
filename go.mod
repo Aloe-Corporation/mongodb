@@ -7,6 +7,7 @@ toolchain go1.22.1
 require go.mongodb.org/mongo-driver v1.15.0
 
 require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/klauspost/compress v1.17.8 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
