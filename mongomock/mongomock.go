@@ -33,5 +33,5 @@ func New(t *mtest.T) *MockConnector {
 }
 
 func NewBasicMTest(t *testing.T, dbName, collName string) *mtest.T {
-	return mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock).DatabaseName("test").CollectionName("reports"))
+	return mtest.New(t, mtest.NewOptions().ClientType(mtest.Mock).DatabaseName(dbName).CollectionName(collName))
 }
